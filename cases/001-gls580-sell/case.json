@@ -1,0 +1,23 @@
+{
+  "id": "001-gls580-sell",
+  "intent": "sell",
+  "location": "Dubai",
+  "target_price_aed": 230000,
+  "vehicle": {
+    "make": "Mercedes-Benz",
+    "model": "GLS 580 4MATIC",
+    "year": 2020,
+    "km": 41000,
+    "spec": "Japanese",
+    "condition": "excellent",
+    "accidents": false,
+    "extras": ["full options", "E-Active Body Control (jumping suspension)", "transparent matte PPF wrap"]
+  },
+  "photos": [],
+  "plate": null,
+  "vin": null,
+  "checks": {},
+  "report_photo": "photo.jpg",
+  "photo_caption": "Illustration of the model (AI-generated), not your car",
+  "notes": "No car photo, plate or VIN received with the request, so the plate agent skips. report_photo is an AI-generated illustration of the model, not the seller's car."
+}

@@ -1,0 +1,41 @@
+[
+  {
+    "sender": "dubbizle-shopper",
+    "to": "plate-check",
+    "kind": "draft",
+    "text": "Draft: SELL IN UAE, NOT AT 230K. Fair AED 254,000. Any status or history issue before I finalise?",
+    "data": {
+      "fair": 254000,
+      "decision": "SELL IN UAE, NOT AT 230K"
+    }
+  },
+  {
+    "sender": "plate-check",
+    "to": "dubbizle-shopper",
+    "kind": "reply",
+    "text": "Skipped: no photo, plate or VIN in the case. Seller claims (no accidents) stay unverified.",
+    "data": {
+      "status": "skipped",
+      "reason": "no photo, plate or VIN provided",
+      "line": "Not run: no plate photo or chassis number received."
+    }
+  },
+  {
+    "sender": "dubbizle-shopper",
+    "to": "plate-check",
+    "kind": "final",
+    "text": "Final: SELL IN UAE, NOT AT 230K. List on Dubizzle at AED 264,000. Accept from AED 244,000. Take AED 230,000 only as instant dealer cash.",
+    "data": {
+      "fair": 254000,
+      "list_price": 264000,
+      "floor": 244000
+    }
+  },
+  {
+    "sender": "plate-check",
+    "to": "dubbizle-shopper",
+    "kind": "ack",
+    "text": "Agreed.",
+    "data": {}
+  }
+]
