@@ -9,10 +9,16 @@ description: Decides whether to buy or sell a car, UAE first, abroad only when i
 Give one decision per car: SELL / BUY / HOLD / PASS, where (UAE or a named country), and at what price. One page, shortest possible.
 
 ## Inputs
-1. Intent: sell or buy.
+1. Intent: sell, buy or flip (inferred from the message, see Quick inquiry).
 2. Car: make, model, year, km, regional spec, condition, accidents, extras.
 3. Price on the table (the user's ask or the seller's ask).
 4. Optional: photos, plate, VIN. If any are present, the plate-check agent runs. Never ask for them.
+
+## Quick inquiry (trigger)
+A short message or a single listing link is enough. Do not interview the user.
+1. `python -m shopper.inquiry "<their message or link>"` creates the case and infers the role (link = buy, "flip"/"resell" = flip, "my car" = sell).
+2. Fill whatever it lists as `missing` from the search step, then run steps 2 to 7 below without stopping.
+3. If the inquiry names a model but no listing ("find me a good GLS 580"), research the listings, rank them with `shopper.inquiry.best_selection`, and report on the top pick.
 
 ## Steps
 1. **Case file.** Write `cases/<nnn>-<slug>/case.json` (copy the shape of `cases/001-gls580-sell/case.json`).
@@ -51,3 +57,7 @@ Auto-promote: off
 ## Learned rules
 
 Rules this agent learned from its own runs. Each one names the lesson it came from.
+
+1. Work out the role (seller, buyer or flipper) before deciding: a listing link means buy, 'flip' or 'resell' means flip, 'my car' means sell. Ask one short question only when the signals contradict. Tentative: user approved on trial. (from L003, 2026-10-25)
+2. Round money on the report to the nearest thousand and write losses as -AED X. Tentative: user approved on trial. (from L004, 2026-10-25)
+3. A quick inquiry or a single listing link triggers the full run (search, both agents, one-page PDF, best pick) with no interview. Tentative: user approved on trial. (from L005, 2026-10-25)

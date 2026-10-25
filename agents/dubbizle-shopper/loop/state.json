@@ -1,4 +1,9 @@
 {
-  "version": 1,
-  "next_lesson": 5
+  "version": 4,
+  "next_lesson": 6,
+  "promoted": [
+    "L003",
+    "L004",
+    "L005"
+  ]
 }

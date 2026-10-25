@@ -62,6 +62,17 @@ In a Claude session: "Dubbizle Shopper: sell my <car>, <km>, <spec>, <price>". C
 
 Intents: `sell`, `buy`, `flip` (buy now, resell privately after about 6 weeks, net of costs and depreciation).
 
+## Quick inquiry
+
+Send one line or one listing link; no questionnaire.
+
+```bash
+python -m shopper.inquiry "flip this https://dubai.dubizzle.com/motors/used-cars/..."   # creates the case, infers the role
+python -m shopper cases/<new case>                                                      # after the search fills any gaps
+```
+
+For "find me the best X", `shopper.inquiry.best_selection` ranks the researched listings (by discount to fair value, or by flip profit) and the report covers the top pick.
+
 ## MVP limits (honest)
 
 1. Live dubizzle, dubicars and police portals were blocked by the build session's network policy, so case 001 used search-engine snapshots of listings. All prices are asking prices, not sold prices.

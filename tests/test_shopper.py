@@ -73,3 +73,23 @@ def test_flip_go_needs_checks_and_margin():
     assert market.decide(case(intent="flip", target_price_aed=255_000), comps(), []).decision.startswith("NO-GO")
     assert market.decide(case(intent="flip"), comps(), [], {"flags": ["accident on record"], "accidents": True}
                          ).decision == "NO-GO: CHECKS FAILED"
+
+
+def test_quick_inquiry_from_a_dubizzle_link():
+    from shopper import inquiry
+    url = ("https://dubai.dubizzle.com/motors/used-cars/mercedes-benz/gls-class/2024/3/29/"
+           "3800-km-warranty-june-2026-gls-580-full-op-2-952---19be6e05a2a34d90b18995ddd184964d/")
+    html = ('<script type="application/ld+json">{"@type": "Car", "brand": {"name": "Mercedes-Benz"}, '
+            '"model": "GLS 580", "vehicleModelDate": "2020", "mileageFromOdometer": {"value": "41000"}, '
+            '"offers": {"price": "230000"}}</script><p>Regional Specs: Japanese Specs</p>')
+    c = inquiry.build_case(f"should I flip this? {url}", html=html)
+    assert c["intent"] == "flip" and c["target_price_aed"] == 230_000
+    assert c["vehicle"]["km"] == 41_000 and c["vehicle"]["spec"] == "Japanese" and not c["missing"]
+    assert inquiry.infer_intent("selling my car") == "sell" and inquiry.infer_intent(url) == "buy"
+
+
+def test_best_selection_picks_the_most_underpriced_listing():
+    from shopper import inquiry
+    picks = inquiry.best_selection(comps(), "buy")
+    assert picks and picks[0]["score"] >= picks[-1]["score"]
+    assert picks[0]["listing"].price_aed < 300_000
