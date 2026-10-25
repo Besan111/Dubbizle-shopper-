@@ -132,20 +132,26 @@ def best_selection(listings, intent="buy", top=3):
     Each listing is valued against all the others, so one cheap outlier cannot vouch for itself."""
     ranked = []
     for i, c in enumerate(listings):
+        if not c.buyable:
+            continue
         others = [o for j, o in enumerate(listings) if j != i]
         if len(others) < 2:
             continue
-        subject = {"year": c.year, "km": c.km, "spec": c.spec, "condition": "good"}
+        subject = {"year": c.year, "km": c.km, "spec": c.spec, "condition": c.condition}
         fair, _, high = market.value(subject, others)
-        pay = c.price_aed * 0.97  # typical negotiation off the ask
+        pay = c.price_aed  # at the asking price, same basis as the full report
         if intent == "flip":
             f = market.flip_math(pay, fair, high, fair * market.QUICK_SALE)
             score, why = f["net"]["base"], f"flip profit about {market.aed(f['net']['base'])}"
         else:
             score, why = fair - pay, f"{(fair - pay) / fair:+.0%} vs fair {market.aed(fair)}"
-        if c.weight < 0.8:
+        weight = c.weight
+        if c.price_aed < 0.80 * fair:  # far under market: usually sold, mistyped or bait
+            weight = min(weight, 0.2)
+            why += " (too cheap to trust: sold, typo or bait?)"
+        elif c.weight < 0.8:
             why += f" (verify first: {c.note or 'listing data uncertain'})"
-        ranked.append({"listing": c, "score": int(score * c.weight), "fair": market.r1000(fair), "why": why})
+        ranked.append({"listing": c, "score": int(score * weight), "fair": market.r1000(fair), "why": why})
     return sorted(ranked, key=lambda r: r["score"], reverse=True)[:top]
 
 

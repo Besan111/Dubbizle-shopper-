@@ -52,7 +52,8 @@ def render(out, case, verdict, plate, photo, sources):
     if photo:
         img = ImageReader(str(photo))
         iw, ih = img.getSize()
-        ph = min(cw * ih / iw, 92 * mm if iw / ih > 1.5 else 74 * mm)
+        cap = 92 * mm if iw / ih > 1.5 else 74 * mm
+        ph = min(cw * ih / iw, cap - (14 * mm if verdict.shortlist else 0))  # room for the shortlist
         pw = ph * iw / ih
         c.drawImage(img, m + (cw - pw) / 2, y - ph, pw, ph)
         if case.get("photo_caption"):
@@ -96,9 +97,11 @@ def render(out, case, verdict, plate, photo, sources):
         c.drawString(m, y, label.upper())
         y -= 12
         for ln in lines:
-            y = para(c, "- " + ln, m, y, cw)
+            y = para(c, ln if ln[:1].isdigit() else "- " + ln, m, y, cw)
         y -= 4
 
+    if verdict.shortlist:
+        section("Shortlist, ranked by flip profit", verdict.shortlist)
     section("Why", verdict.reasons)
     if verdict.checklist:
         section("Before you pay", verdict.checklist)

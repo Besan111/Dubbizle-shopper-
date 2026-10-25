@@ -93,3 +93,12 @@ def test_best_selection_picks_the_most_underpriced_listing():
     picks = inquiry.best_selection(comps(), "buy")
     assert picks and picks[0]["score"] >= picks[-1]["score"]
     assert picks[0]["listing"].price_aed < 300_000
+
+
+def test_best_of_case_ranks_subject_first_and_never_values_it_against_itself():
+    best = ROOT / "cases" / "003-best-gls580-flip"
+    rows = json.loads((best / "comps.json").read_text())["comps"]
+    assert len(market.load_comps(rows)) == len(market.load_comps(rows, include_subject=True)) - 1
+    v, _, _ = cli.run(best)
+    assert v.shortlist[0].startswith("1. 2020, 41k km")
+    assert "AED 26,000" in v.shortlist[0] and v.tiles[1][1] == "AED 26,000"  # shortlist and report agree

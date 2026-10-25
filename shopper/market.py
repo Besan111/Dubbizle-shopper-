@@ -34,6 +34,8 @@ class Comp:
     url: str = ""
     note: str = ""
     weight: float = 1.0       # research quality: 1 clean, <1 stale / conflicting / date unclear
+    buyable: bool = True      # False for sold listings: price evidence only
+    condition: str = "good"   # known condition of the listed car, when seen
     adjusted: float = 0.0
     final_weight: float = 0.0
 
@@ -60,6 +62,7 @@ class Verdict:
     tiles: list = field(default_factory=list)       # [(label, text)]; default is list / accept / fair
     checklist: list = field(default_factory=list)   # conditions to clear before paying
     flip: dict = field(default_factory=dict)
+    shortlist: list = field(default_factory=list)   # ranked alternatives for a "find me the best" inquiry
 
 
 def r1000(x):
@@ -94,7 +97,8 @@ def value(subject, comps):
     pairs = []
     for c in comps:
         c.adjusted = adjust(c, subject)
-        c.final_weight = c.weight / (1 + abs(c.km - subject["km"]) / KM_WEIGHT_SCALE)
+        c.final_weight = (c.weight / (1 + abs(c.km - subject["km"]) / KM_WEIGHT_SCALE)
+                          / (1 + abs(c.year - subject["year"])))  # other model years count less
         pairs.append((c.adjusted, c.final_weight))
     if not pairs:
         raise ValueError("No comparables: research step must produce comps.json first")
@@ -173,10 +177,11 @@ def decide(case, comps, markets, plate_report=None):
                    quick, int(target), gap, confidence(comps), reasons, exp, len(comps))
 
 
-def load_comps(rows):
+def load_comps(rows, include_subject=False):
+    """`subject: true` marks the car being decided on; it never counts as its own comparable."""
     comps = []
     for r in rows:
-        if r.get("exclude"):
+        if r.get("exclude") or (r.get("subject") and not include_subject):
             continue
         comps.append(Comp(**{k: r[k] for k in Comp.__dataclass_fields__ if k in r}))
     return comps

@@ -55,6 +55,13 @@ def run(case_dir):
         verdict.reasons.append("History is unverified. Pull the RTA vehicle history certificate and accident "
                                "report (about AED 100 each) before listing; buyers pay full price for proof.")
     verdict.reasons.extend(research.get("insights", []))
+    if case.get("best_of"):
+        from .inquiry import best_selection
+        listings = market.load_comps(research["comps"], include_subject=True)
+        for i, p in enumerate(best_selection(listings, case["intent"]), 1):
+            c = p["listing"]
+            verdict.shortlist.append(f"{i}. {c.year}, {c.km // 1000}k km, {c.spec}, asking AED "
+                                     f"{int(c.price_aed) // 1000}k, {c.source.split(',')[0]}: {p['why']}")
     verdict.export_line = export_line(verdict.export)
     bus.post("dubbizle-shopper", "plate-check", "final", f"Final: {verdict.decision}. {verdict.action}",
              fair=verdict.fair, list_price=verdict.list_price, floor=verdict.floor)
