@@ -16,6 +16,11 @@ KM_WEIGHT_SCALE = 40_000      # comps 40k km away count half
 CONDITION_PREMIUM = {"excellent": 0.02, "good": 0.0, "fair": -0.06, "poor": -0.15}
 ACCIDENT_DISCOUNT = 0.12
 QUICK_SALE = 0.90             # dealer instant-cash offer as a share of fair private value
+MONTHLY_DEPRECIATION = 0.0104 # about 12.5% a year for a 5-6 year old luxury SUV
+FLIP_COSTS = {"transfer and plates": 1500, "pre-purchase inspection": 700,
+              "insurance while holding": 1000, "detailing and listing": 1000}
+FLIP_HOLD_MONTHS = 1.5
+FLIP_MIN_MARGIN = (10_000, 0.04)  # AED floor, share of buy price: whichever is higher
 
 
 @dataclass
@@ -52,10 +57,18 @@ class Verdict:
     comps_used: int = 0
     export_line: str = ""
     agents_line: str = ""
+    tiles: list = field(default_factory=list)       # [(label, text)]; default is list / accept / fair
+    checklist: list = field(default_factory=list)   # conditions to clear before paying
+    flip: dict = field(default_factory=dict)
 
 
 def r1000(x):
     return int(round(x / 1000.0) * 1000)
+
+
+def aed(x):
+    """AED amount rounded to the nearest thousand, sign in front: -AED 9,000."""
+    return f"{'-' if x < 0 else ''}AED {abs(r1000(x)):,}"
 
 
 def adjust(comp, subject):
@@ -144,6 +157,8 @@ def decide(case, comps, markets, plate_report=None):
                       f"Take AED {int(target):,} only as instant dealer cash.")
         else:
             decision, action = "HOLD, DO NOT SELL AT THIS PRICE", f"It is a giveaway. Fair private value is AED {r1000(fair):,}."
+    elif case["intent"] == "flip":
+        return decide_flip(case, comps, exp, fair, low, high, list_price, floor, quick, plate_report)
     else:  # buy
         if target <= fair * 0.92:
             decision, action = "BUY", f"Below fair value. Offer AED {r1000(target * 0.97):,}, pay up to AED {r1000(target):,}."
@@ -165,3 +180,52 @@ def load_comps(rows):
             continue
         comps.append(Comp(**{k: r[k] for k in Comp.__dataclass_fields__ if k in r}))
     return comps
+
+
+def flip_math(buy, fair, high, quick, costs=None, months=FLIP_HOLD_MONTHS):
+    """Buy now, resell privately after `months`. Returns net profit per scenario and the max buy price."""
+    cost = sum((costs or FLIP_COSTS).values())
+    drift = 1 - MONTHLY_DEPRECIATION * months
+    scen = {"base": fair * drift, "best": high * drift, "worst": quick * drift,
+            "hidden accident": fair * (1 - ACCIDENT_DISCOUNT) * QUICK_SALE * drift}
+    net = {k: int(v - buy - cost) for k, v in scen.items()}
+    margin = max(FLIP_MIN_MARGIN[0], FLIP_MIN_MARGIN[1] * buy)
+    max_buy = int((scen["base"] - cost - margin) // 1000 * 1000)
+    return {"cost": cost, "net": net, "max_buy": max_buy, "months": months,
+            "exit_base": r1000(scen["base"]), "monthly_loss": int(round(fair * MONTHLY_DEPRECIATION, -2))}
+
+
+def decide_flip(case, comps, exp, fair, low, high, list_price, floor, quick, plate_report):
+    buy = int(case["target_price_aed"])
+    f = flip_math(buy, fair, high, quick, case.get("flip_costs"))
+    n, max_buy = f["net"], f["max_buy"]
+    offer = min(r1000(buy * 0.95), max_buy)
+    checks_clean = bool(plate_report) and plate_report.get("status") == "clean"
+    flagged = bool(plate_report and plate_report.get("flags"))
+
+    if flagged:
+        decision, action = "NO-GO: CHECKS FAILED", "Walk away, or renegotiate only after an inspector prices the damage."
+    elif buy <= max_buy:
+        decision = "GO, BUY AND FLIP" if checks_clean else "GO, BUT ONLY AFTER 3 CHECKS"
+        action = (f"Offer AED {offer:,}, pay at most AED {max_buy:,}. "
+                  f"Relist at AED {list_price:,}, accept from AED {floor:,}.")
+    elif buy <= max_buy + 5000:
+        decision, action = f"ONLY AT AED {max_buy // 1000}K OR LESS", f"At {buy // 1000}k the margin is too thin for the risk."
+    else:
+        decision, action = "NO-GO: MARGIN TOO THIN", f"Flip pays only below AED {max_buy:,}."
+
+    reasons = [
+        f"Buy at AED {buy:,}, resell privately at about AED {f['exit_base']:,} in 4 to 8 weeks. After about "
+        f"AED {f['cost']:,} costs you keep about {aed(n['base'])} ({n['base'] / buy:.0%}).",
+        f"Risk: a forced sale to a dealer means {aed(n['worst'])}; a hidden accident means {aed(n['hidden accident'])}. "
+        "The checks below remove most of that risk before you pay.",
+        f"Japanese spec has fewer buyers than GCC, and each month you hold it costs about AED {f['monthly_loss']:,}. "
+        "Price it right from day one.",
+    ]
+    if not exp["go_abroad"]:
+        reasons.append("Exporting it does not pay; resell in the UAE.")
+    tiles = [("Pay at most", f"AED {max_buy:,}"), ("Expected profit", aed(n["base"])),
+             ("Worst case", aed(n["worst"]))]
+    return Verdict("flip", decision, action, r1000(fair), r1000(low), r1000(high), list_price, floor, quick, buy,
+                   (buy - fair) / fair, confidence(comps), reasons, exp, len(comps), tiles=tiles,
+                   checklist=list(case.get("checklist", [])), flip=f)

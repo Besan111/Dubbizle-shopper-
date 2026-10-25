@@ -49,11 +49,11 @@ def run(case_dir):
 
     # 3. market agent folds the plate findings in and finalises
     verdict = market.decide(case, comps, markets, plate_report)
-    if plate_report["status"] == "skipped":
+    if plate_report.get("flags"):
+        verdict.reasons.append("Plate check flags: " + "; ".join(plate_report["flags"]) + ". Fix or disclose first.")
+    elif plate_report["status"] == "skipped" and verdict.intent != "flip":  # a flip carries its own checklist
         verdict.reasons.append("History is unverified. Pull the RTA vehicle history certificate and accident "
                                "report (about AED 100 each) before listing; buyers pay full price for proof.")
-    elif plate_report.get("flags"):
-        verdict.reasons.append("Plate check flags: " + "; ".join(plate_report["flags"]) + ". Fix or disclose first.")
     verdict.reasons.extend(research.get("insights", []))
     verdict.export_line = export_line(verdict.export)
     bus.post("dubbizle-shopper", "plate-check", "final", f"Final: {verdict.decision}. {verdict.action}",

@@ -56,6 +56,12 @@ In a Claude session: "Dubbizle Shopper: sell my <car>, <km>, <spec>, <price>". C
 
 **SELL IN UAE, NOT AT 230K.** List on dubizzle at **AED 264,000**, accept from **AED 244,000**, take 230k only as instant dealer cash. Fair private value AED 254,000 (range 242k to 267k), confidence Medium. Kazakhstan export comes out about AED 9k worse after costs. Plate check was skipped because no photo, plate or VIN was received. See `cases/001-gls580-sell/decision.pdf`.
 
+## Case 002: same car, you are the buyer and want to flip it
+
+**GO, BUT ONLY AFTER 3 CHECKS.** Offer AED 218,000, pay at most AED 236,000, relist at AED 264,000 and accept from AED 244,000. Expected profit is about AED 16,000 (7%) in 4 to 8 weeks. A forced sale to a dealer means about -AED 9,000; a hidden accident means about -AED 36,000, which is what the checks are for. The plate (Dubai CC 53874) was read from the seller's photo. See `cases/002-gls580-flip/decision.pdf`.
+
+Intents: `sell`, `buy`, `flip` (buy now, resell privately after about 6 weeks, net of costs and depreciation).
+
 ## MVP limits (honest)
 
 1. Live dubizzle, dubicars and police portals were blocked by the build session's network policy, so case 001 used search-engine snapshots of listings. All prices are asking prices, not sold prices.

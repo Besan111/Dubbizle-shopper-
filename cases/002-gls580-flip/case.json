@@ -1,0 +1,41 @@
+{
+  "id": "002-gls580-flip",
+  "intent": "flip",
+  "location": "Dubai",
+  "target_price_aed": 230000,
+  "vehicle": {
+    "make": "Mercedes-Benz",
+    "model": "GLS 580 4MATIC",
+    "year": 2020,
+    "km": 41000,
+    "spec": "Japanese",
+    "condition": "excellent",
+    "accidents": false,
+    "extras": [
+      "full options",
+      "E-Active Body Control (jumping suspension)",
+      "transparent matte PPF wrap"
+    ]
+  },
+  "photos": [
+    "car.jpg"
+  ],
+  "plate": "Dubai CC 53874",
+  "vin": null,
+  "checks": {},
+  "report_photo": "photo.jpg",
+  "photo_caption": "Seller's photo",
+  "notes": "Buyer's view: user is buying at 230k to flip. Plate read from the seller's photo; VIN not given.",
+  "plate_box": [
+    0.77,
+    0.61,
+    0.85,
+    0.71
+  ],
+  "photo_notes": "Photo matches the description (matte white film, AMG Line, 2020, no visible damage).",
+  "checklist": [
+    "History: RTA history certificate, accident report and police status on CC 53874 show no accidents, mortgage or fines.",
+    "Inspection (about AED 700): paint depth through the film, E-Active Body Control test, full code scan.",
+    "Papers: Japan export certificate and UAE customs papers confirm 41,000 km. Walk away if any check fails."
+  ]
+}

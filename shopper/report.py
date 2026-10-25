@@ -15,9 +15,9 @@ RULE = colors.HexColor("#d9dde3")
 
 def tone(decision):
     d = decision.upper()
-    if d.startswith(("HOLD", "PASS")):
+    if d.startswith(("HOLD", "PASS", "NO-GO")):
         return STOP
-    return WAIT if ("NOT AT" in d or "RAISE" in d or "HIGH" in d or "NEGOTIATE" in d) else GO
+    return WAIT if any(w in d for w in ("NOT AT", "RAISE", "HIGH", "NEGOTIATE", "ONLY")) else GO
 
 
 def para(c, text, x, y, width, font="Helvetica", size=9.5, leading=12.5, color=INK):
@@ -52,7 +52,7 @@ def render(out, case, verdict, plate, photo, sources):
     if photo:
         img = ImageReader(str(photo))
         iw, ih = img.getSize()
-        ph = min(cw * ih / iw, 92 * mm)
+        ph = min(cw * ih / iw, 92 * mm if iw / ih > 1.5 else 74 * mm)
         pw = ph * iw / ih
         c.drawImage(img, m + (cw - pw) / 2, y - ph, pw, ph)
         if case.get("photo_caption"):
@@ -74,7 +74,8 @@ def render(out, case, verdict, plate, photo, sources):
     y -= 22 * mm + 8
 
     # three numbers
-    tiles = [("List at", verdict.list_price), ("Accept from", verdict.floor), ("Fair value", verdict.fair)]
+    tiles = verdict.tiles or [("List at", f"AED {verdict.list_price:,}"), ("Accept from", f"AED {verdict.floor:,}"),
+                              ("Fair value", f"AED {verdict.fair:,}")]
     tw = (cw - 2 * 4 * mm) / 3
     for i, (label, val) in enumerate(tiles):
         x = m + i * (tw + 4 * mm)
@@ -85,7 +86,7 @@ def render(out, case, verdict, plate, photo, sources):
         c.drawString(x + 4 * mm, y - 5.5 * mm, label.upper())
         c.setFillColor(INK)
         c.setFont("Helvetica-Bold", 15)
-        c.drawString(x + 4 * mm, y - 12.5 * mm, f"AED {val:,}")
+        c.drawString(x + 4 * mm, y - 12.5 * mm, val)
     y -= 16 * mm + 16
 
     def section(label, lines):
@@ -99,9 +100,15 @@ def render(out, case, verdict, plate, photo, sources):
         y -= 4
 
     section("Why", verdict.reasons)
-    section("Elsewhere?", [verdict.export_line])
+    if verdict.checklist:
+        section("Before you pay", verdict.checklist)
+    if verdict.intent != "flip":
+        section("Elsewhere?", [verdict.export_line])
     section("Plate and chassis check", [plate.get("line", "Not run.")])
     section("Agents", [verdict.agents_line])
+
+    if y < m + 24 * mm:
+        raise ValueError("Content runs into the footer; shorten the reasons or checklist to keep one page.")
 
     # footer: sources and confidence
     c.setStrokeColor(RULE)

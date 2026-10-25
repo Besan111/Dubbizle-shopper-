@@ -76,7 +76,10 @@ def run(case, case_dir, bus):
     elif report["status"] == "clean":
         report["line"] = f"Clean: plate {plate or '-'}, VIN {vin or '-'}; no accidents, no mortgage, no fines."
     else:
-        report["line"] = (f"Plate {plate or 'not readable yet'}; {len(todo)} check(s) to run, "
-                          f"{len(blocked)} need the chassis number.")
+        report["line"] = (f"Plate {plate or 'not readable yet'}, read from the photo. Status, accidents and mortgage "
+                          f"are not verified yet: the portals need the owner's UAE PASS"
+                          f"{' and the chassis number' if blocked else ''}.")
+    if case.get("photo_notes"):
+        report["line"] = case["photo_notes"] + " " + report["line"]
     bus.post("plate-check", "dubbizle-shopper", "flag" if flags else "reply", report["line"], **report)
     return report

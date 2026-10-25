@@ -64,3 +64,12 @@ def test_full_run_writes_one_page_pdf(tmp_path):
     v, p, out = cli.run(work)
     assert out.exists() and (work / "messages.json").exists()
     assert len(json.loads((work / "messages.json").read_text())) == 4
+
+
+def test_flip_go_needs_checks_and_margin():
+    v = market.decide(case(intent="flip"), comps(), [], {"status": "partial"})
+    assert v.decision == "GO, BUT ONLY AFTER 3 CHECKS" and v.flip["net"]["base"] > 10_000
+    assert v.flip["net"]["worst"] < 0 < v.flip["net"]["base"]
+    assert market.decide(case(intent="flip", target_price_aed=255_000), comps(), []).decision.startswith("NO-GO")
+    assert market.decide(case(intent="flip"), comps(), [], {"flags": ["accident on record"], "accidents": True}
+                         ).decision == "NO-GO: CHECKS FAILED"
