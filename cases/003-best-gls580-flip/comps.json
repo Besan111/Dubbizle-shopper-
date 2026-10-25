@@ -1,0 +1,175 @@
+{
+  "researched": "2026-10-25",
+  "method": "Quick inquiry 'find me the best GLS 580 to flip on dubizzle'. Live dubizzle blocked in this session; listings come from search snapshots of dubizzle, DubiCars, YallaMotor and Trovit. Asking prices, dates unclear.",
+  "comps": [
+    {
+      "source": "seller (case 002), Dubai, plate CC 53874",
+      "year": 2020,
+      "km": 41000,
+      "spec": "Japanese",
+      "seller": "private",
+      "price_aed": 230000,
+      "weight": 1.0,
+      "url": "cases/002-gls580-flip",
+      "note": "real photo seen; matte PPF, E-Active Body Control",
+      "subject": true,
+      "condition": "excellent"
+    },
+    {
+      "source": "dubizzle (UAE)",
+      "year": 2021,
+      "km": 53000,
+      "spec": "American",
+      "seller": "dealer",
+      "price_aed": 298000,
+      "weight": 0.6,
+      "url": "https://uae.dubizzle.com/motors/used-cars/mercedes-benz/gls-class/",
+      "note": "'Clean Title' wording suggests a US import"
+    },
+    {
+      "source": "dubizzle (Dubai Marina)",
+      "year": 2021,
+      "km": 4800,
+      "spec": "unknown",
+      "seller": "dealer",
+      "price_aed": 388999,
+      "weight": 0.6,
+      "url": "https://uae.dubizzle.com/motors/used-cars/mercedes-benz/gls-class/?page=1%3D"
+    },
+    {
+      "source": "dubizzle (UAE)",
+      "year": 2022,
+      "km": 28900,
+      "spec": "unknown",
+      "seller": "dealer",
+      "price_aed": 375000,
+      "weight": 0.6,
+      "url": "https://uae.dubizzle.com/motors/used-cars/mercedes-benz/gls-class/?page=1%3D"
+    },
+    {
+      "source": "dubizzle (Dubai), 3,800 km special edition",
+      "year": 2023,
+      "km": 3800,
+      "spec": "unknown",
+      "seller": "dealer",
+      "price_aed": 428000,
+      "url": "https://dubai.dubizzle.com/motors/used-cars/mercedes-benz/gls-class/2024/3/29/3800-km-warranty-june-2026-gls-580-full-op-2-952---19be6e05a2a34d90b18995ddd184964d/",
+      "exclude": "posted March 2024: likely sold or stale"
+    },
+    {
+      "source": "Trovit / DubiCars",
+      "year": 2022,
+      "km": 39502,
+      "spec": "GCC",
+      "seller": "dealer",
+      "price_aed": 219999,
+      "weight": 0.6,
+      "url": "https://cars.trovit.ae/cars/dubai-mercedes-gls"
+    },
+    {
+      "source": "DubiCars (sold)",
+      "year": 2021,
+      "km": 13944,
+      "spec": "unknown",
+      "seller": "dealer",
+      "price_aed": 340000,
+      "weight": 0.8,
+      "buyable": false,
+      "url": "https://www.dubicars.com/dubai/used/mercedes-benz/gls-580/2021",
+      "note": "marked sold"
+    },
+    {
+      "source": "DubiCars (Japanese spec)",
+      "year": 2021,
+      "km": 33173,
+      "spec": "Japanese",
+      "seller": "dealer",
+      "price_aed": 321000,
+      "weight": 0.6,
+      "url": "https://www.dubicars.com/dubai/used/mercedes-benz/gls-580/2021",
+      "note": "listed USD 87,400"
+    },
+    {
+      "source": "YallaMotor (Dubai dealer)",
+      "year": 2020,
+      "km": 21523,
+      "spec": "Japanese",
+      "seller": "dealer",
+      "price_aed": 299800,
+      "weight": 0.9,
+      "url": "https://uae.yallamotor.com/used-cars/mercedes-benz/gls"
+    },
+    {
+      "source": "YallaMotor (Dubai dealer)",
+      "year": 2020,
+      "km": 35921,
+      "spec": "Japanese",
+      "seller": "dealer",
+      "price_aed": 289900,
+      "weight": 0.9,
+      "url": "https://uae.yallamotor.com/used-cars/mercedes-benz/gls"
+    },
+    {
+      "source": "DubiCars (dealer)",
+      "year": 2020,
+      "km": 50900,
+      "spec": "GCC",
+      "seller": "dealer",
+      "price_aed": 279000,
+      "weight": 0.9,
+      "url": "https://www.dubicars.com/dubai/used/mercedes-benz/gls-580/2020"
+    },
+    {
+      "source": "dubizzle (private)",
+      "year": 2020,
+      "km": 32000,
+      "spec": "GCC",
+      "seller": "private",
+      "price_aed": 279000,
+      "weight": 0.6,
+      "url": "https://dubai.dubizzle.com/motors/used-cars/mercedes-benz/gls-class/"
+    },
+    {
+      "source": "DubiCars (UAE)",
+      "year": 2020,
+      "km": 119289,
+      "spec": "GCC",
+      "seller": "dealer",
+      "price_aed": 229000,
+      "weight": 0.8,
+      "url": "https://www.dubicars.com/uae/used/mercedes-benz/gls-580"
+    },
+    {
+      "source": "DubiCars #957066",
+      "year": 2020,
+      "km": 13000,
+      "spec": "Japanese",
+      "seller": "dealer",
+      "price_aed": 260000,
+      "url": "https://www.dubicars.com/2020-mercedes-benz-gls580-std-957066.html",
+      "weight": 0.3,
+      "note": "same listing also seen at 216,999: conflicting"
+    },
+    {
+      "source": "DubiCars #957066",
+      "year": 2020,
+      "km": 13000,
+      "spec": "Japanese",
+      "seller": "dealer",
+      "price_aed": 216999,
+      "url": "https://www.dubicars.com/ar/2020-mercedes-benz-gls580-ultra-low-km-v8-aed-216999-957066.html",
+      "weight": 0.3,
+      "note": "conflicting with 260,000"
+    }
+  ],
+  "insights": [
+    "Case 002, using fewer comparables, estimated AED 16,000 profit on this car. Plan on the lower figure; treat anything above it as a bonus."
+  ],
+  "sources": [
+    "uae.dubizzle.com/motors/used-cars/mercedes-benz/gls-class",
+    "dubicars.com/dubai/used/mercedes-benz/gls-580",
+    "uae.yallamotor.com/used-cars/mercedes-benz/gls",
+    "cars.trovit.ae/cars/dubai-mercedes-gls",
+    "Research 25 Oct 2026 via search snapshots; live dubizzle blocked in this run"
+  ]
+}

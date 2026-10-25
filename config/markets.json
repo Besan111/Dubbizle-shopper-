@@ -1,0 +1,9 @@
+[
+  {"name": "Kazakhstan", "local_price_aed": 392857, "ask_to_realised": 0.92,
+   "duty_pct": 0.32, "fixed_costs_aed": 35000, "weeks": 8, "risk": "medium",
+   "note": "kolesa.kz: used 2020 GLS 580, 60k km, KZT 55m at about 140 KZT/AED. Duty about 15% + VAT 12% + excise/recycling/registration (approximate). Shipping and broker about AED 15k."},
+  {"name": "USA", "local_price_aed": 139000, "ask_to_realised": 1.0,
+   "duty_pct": 0.025, "fixed_costs_aed": 20000, "weeks": 10, "risk": "high",
+   "note": "KBB private value about USD 37-39k; non-US spec cars cannot be registered under 25 years."},
+  {"name": "Russia", "excluded": "sanctions and compliance risk"}
+]

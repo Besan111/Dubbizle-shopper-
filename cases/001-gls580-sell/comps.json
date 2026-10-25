@@ -1,0 +1,40 @@
+{
+  "researched": "2026-10-25",
+  "method": "dubizzle first. Live dubizzle/dubicars pages were blocked by this session's network policy, so prices come from search-engine snapshots of dubizzle, YallaMotor and DubiCars listings. All are ASKING prices; listing dates are unclear.",
+  "comps": [
+    {"source": "YallaMotor (Dubai dealer)", "year": 2020, "km": 35921, "spec": "Japanese", "seller": "dealer", "price_aed": 289900,
+     "url": "https://uae.yallamotor.com/used-cars/mercedes-benz/gls", "weight": 0.9, "note": "GLS 580 AMG Line; same km also seen on DubiCars at 300,600 labelled GCC"},
+    {"source": "YallaMotor (Dubai dealer)", "year": 2020, "km": 21523, "spec": "Japanese", "seller": "dealer", "price_aed": 299800,
+     "url": "https://uae.yallamotor.com/used-cars/mercedes-benz/gls", "weight": 0.9},
+    {"source": "DubiCars (dealer)", "year": 2020, "km": 50900, "spec": "GCC", "seller": "dealer", "price_aed": 279000,
+     "url": "https://www.dubicars.com/dubai/used/mercedes-benz/gls-580/2020", "weight": 0.9},
+    {"source": "dubizzle (private)", "year": 2020, "km": 32000, "spec": "GCC", "seller": "private", "price_aed": 279000,
+     "url": "https://dubai.dubizzle.com/motors/used-cars/mercedes-benz/gls-class/", "weight": 0.6, "note": "no warranty; snapshot date unclear"},
+    {"source": "DubiCars (UAE)", "year": 2020, "km": 119289, "spec": "GCC", "seller": "dealer", "price_aed": 229000,
+     "url": "https://www.dubicars.com/uae/used/mercedes-benz/gls-580", "weight": 0.8, "note": "high km, weighted down by distance"},
+    {"source": "DubiCars #957066", "year": 2020, "km": 13000, "spec": "Japanese", "seller": "dealer", "price_aed": 260000,
+     "url": "https://www.dubicars.com/2020-mercedes-benz-gls580-std-957066.html", "weight": 0.3, "note": "same listing also seen at 216,999: conflicting"},
+    {"source": "DubiCars #957066", "year": 2020, "km": 13000, "spec": "Japanese", "seller": "dealer", "price_aed": 216999,
+     "url": "https://www.dubicars.com/ar/2020-mercedes-benz-gls580-ultra-low-km-v8-aed-216999-957066.html", "weight": 0.3, "note": "conflicting with 260,000"},
+    {"source": "dubizzle (Al Ain, Swidan Motors)", "year": 2020, "km": 18000, "spec": "European", "seller": "dealer", "price_aed": 385000,
+     "exclude": "stale: 2022-2023 era listing, before current depreciation"},
+    {"source": "dubizzle (Dubai, Al Barsha)", "year": 2020, "km": 34015, "spec": "GCC", "seller": "dealer", "price_aed": 515000,
+     "exclude": "stale: near-new pricing era"},
+    {"source": "dubizzle (Dubai, Super Motor)", "year": 2020, "km": 90000, "spec": "GCC", "seller": "dealer", "price_aed": 415000,
+     "exclude": "stale"},
+    {"source": "dubizzle (Abu Dhabi)", "year": 2020, "km": 85000, "spec": "GCC", "seller": "dealer", "price_aed": 379000,
+     "exclude": "stale"}
+  ],
+  "insights": [
+    "Japanese spec sells about 5% under GCC in the UAE (no local warranty, climate doubts); your PPF, E-Active Body Control and clean record earn part of it back.",
+    "Sell now: a 2020 GLS 580 loses roughly 10 to 15% a year, and every month you wait costs about AED 2,500."
+  ],
+  "sources": [
+    "uae.yallamotor.com/used-cars/mercedes-benz/gls",
+    "dubicars.com/uae/used/mercedes-benz/gls-580",
+    "dubai.dubizzle.com/motors/used-cars/mercedes-benz/gls-class",
+    "dubizzle.com/blog/cars/japanese-vs-gcc-specs-cars",
+    "kolesa.kz/cars/mercedes-benz/gls-580",
+    "kbb.com 2020 GLS 580 values. Research 25 Oct 2026; live dubizzle blocked in this run, so search snapshots were used"
+  ]
+}

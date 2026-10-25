@@ -1,0 +1,55 @@
+[
+  {
+    "sender": "dubbizle-shopper",
+    "to": "plate-check",
+    "kind": "draft",
+    "text": "Draft: GO, BUT ONLY AFTER 3 CHECKS. Fair AED 265,000. Any status or history issue before I finalise?",
+    "data": {
+      "fair": 265000,
+      "decision": "GO, BUT ONLY AFTER 3 CHECKS"
+    }
+  },
+  {
+    "sender": "plate-check",
+    "to": "dubbizle-shopper",
+    "kind": "reply",
+    "text": "Photo matches the description (matte white film, AMG Line, 2020, no visible damage). Plate Dubai CC 53874, read from the photo. Status, accidents and mortgage are not verified yet: the portals need the owner's UAE PASS and the chassis number.",
+    "data": {
+      "status": "partial",
+      "plate": "Dubai CC 53874",
+      "vin": null,
+      "zooms": [
+        "cases/003-best-gls580-flip/plate_zoom_0.jpg"
+      ],
+      "flags": [],
+      "accidents": false,
+      "todo": [
+        "Dubai Police vehicle status and fines: Dubai Police app / dubaipolice.gov.ae > Services > Vehicle status inquiry"
+      ],
+      "blocked": [
+        "RTA vehicle history certificate (owners, mortgage, insurance) (needs vin)",
+        "Accident history by chassis (needs vin)",
+        "Bank mortgage / NOC (needs vin)"
+      ],
+      "line": "Photo matches the description (matte white film, AMG Line, 2020, no visible damage). Plate Dubai CC 53874, read from the photo. Status, accidents and mortgage are not verified yet: the portals need the owner's UAE PASS and the chassis number."
+    }
+  },
+  {
+    "sender": "dubbizle-shopper",
+    "to": "plate-check",
+    "kind": "final",
+    "text": "Final: GO, BUT ONLY AFTER 3 CHECKS. Offer AED 218,000, pay at most AED 246,000. Relist at AED 275,000, accept from AED 254,000.",
+    "data": {
+      "fair": 265000,
+      "list_price": 275000,
+      "floor": 254000
+    }
+  },
+  {
+    "sender": "plate-check",
+    "to": "dubbizle-shopper",
+    "kind": "ack",
+    "text": "Agreed.",
+    "data": {}
+  }
+]
